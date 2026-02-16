@@ -12,21 +12,12 @@ interface QuestCardProps {
 }
 
 export function QuestCard({ quest, onComplete, showButterfly = false }: QuestCardProps) {
-  const [answer, setAnswer] = useState('')
   const [showMemory, setShowMemory] = useState(false)
   const [isWrong, setIsWrong] = useState(false)
   const [hintCount, setHintCount] = useState(0)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!answer.trim()) {
-      setIsWrong(true)
-      setTimeout(() => setIsWrong(false), 500)
-      return
-    }
-
-    const normalizedAnswer = answer.toLowerCase().trim()
+  const handleChoice = (choice: string) => {
+    const normalizedAnswer = choice.toLowerCase().trim()
     const isCorrect = quest.answers.some((a) =>
       normalizedAnswer.includes(a.toLowerCase()) || a.toLowerCase().includes(normalizedAnswer)
     )
@@ -50,6 +41,22 @@ export function QuestCard({ quest, onComplete, showButterfly = false }: QuestCar
   const getCharacterEmoji = () => {
     if (quest.character === 'both') return '🎮👩'
     return '🎮'
+  }
+
+  function ButterflyAnimation() {
+    return (
+      <motion.span
+        className="fixed text-4xl z-40 pointer-events-none"
+        initial={{ left: '-10%', top: '50%' }}
+        animate={{
+          left: ['0%', '30%', '60%', '110%'],
+          top: ['50%', '30%', '60%', '40%'],
+        }}
+        transition={{ duration: 4, ease: 'easeInOut' }}
+      >
+        🦋
+      </motion.span>
+    )
   }
 
   return (
@@ -92,26 +99,31 @@ export function QuestCard({ quest, onComplete, showButterfly = false }: QuestCar
         </div>
 
         {/* Answer Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="Enter your answer..."
-            className={`input-field ${isWrong ? 'animate-shake border-red-400' : ''}`}
-            autoComplete="off"
-          />
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {(quest.choices || quest.answers).map((choice, index) => (
+              <motion.button
+                key={index}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleChoice(choice)}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  isWrong
+                    ? 'border-red-400 bg-red-500/20'
+                    : 'border-pink-400/30 bg-white/5 hover:bg-white/10 hover:border-pink-400'
+                }`}
+              >
+                <span className="text-pink-100 font-medium">{choice}</span>
+              </motion.button>
+            ))}
+          </div>
 
           {hintCount > 0 && (
             <p className="text-center text-white/70 text-sm">
               💡 {getHint()}
             </p>
           )}
-
-          <button type="submit" className="btn-primary w-full">
-            Submit Answer
-          </button>
-        </form>
+        </div>
       </motion.div>
 
       {/* Memory Popup */}
@@ -123,25 +135,9 @@ export function QuestCard({ quest, onComplete, showButterfly = false }: QuestCar
             setShowMemory(false)
             onComplete(quest.id)
           }}
-          nextLabel="Continue to Next Quest"
+          nextLabel={quest.id === 'quest-3' ? 'Complete Our Journey' : 'Continue to Next Quest'}
         />
       )}
     </>
-  )
-}
-
-function ButterflyAnimation() {
-  return (
-    <motion.span
-      className="fixed text-4xl z-40 pointer-events-none"
-      initial={{ left: '-10%', top: '50%' }}
-      animate={{
-        left: ['0%', '30%', '60%', '110%'],
-        top: ['50%', '30%', '60%', '40%'],
-      }}
-      transition={{ duration: 4, ease: 'easeInOut' }}
-    >
-      🦋
-    </motion.span>
   )
 }

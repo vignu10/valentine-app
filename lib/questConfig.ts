@@ -11,6 +11,7 @@ export const questConfig: QuestConfig = {
       character: 'cody',
       riddle: `In a world of two, we play our part,\nThrough every level, you're my heart.\nLike Cody and May, hand in hand,\nWhat's the name of this adventure land?`,
       answers: ['it takes two', 'together'],
+      choices: ['It Takes Two', 'It Takes Three', 'Together', 'Forever'],
       successMessage: 'The adventure awaits... Find the next clue where wheels await! 🚗',
       memory: "Remember when we first played It Takes Two together? That's when I knew you were my player two forever. 🎮💕",
       hasCarSurprise: true  // ADD THIS LINE
@@ -24,6 +25,7 @@ export const questConfig: QuestConfig = {
       character: 'both',
       riddle: `Where flickering flames dance with grace,\nMelodies float in this magical space.\nAt six-fifteen, when stars align,\nWhat enchanting place will be thine?`,
       answers: ['candlelight concert', 'concert', 'candlelight'],
+      choices: ['Candlelight Concert', 'Movie Theater', 'Home', 'Beach'],
       successMessage: 'Almost there... The magic awaits at 6:15 PM! 🕕',
       memory: 'Every journey with you feels like an adventure. I can\'t wait to create more memories together. 💕',
     },
@@ -36,8 +38,9 @@ export const questConfig: QuestConfig = {
       character: 'both',
       riddle: `What three words describe everything I feel for you? 💕`,
       answers: ['i love you'],
+      choices: ['I Love You', 'I Miss You', 'I Need You', 'I Want You'],
       successMessage: 'Forever and always, my Player Two 💕',
-      memory: '',
+      memory: "Every moment with you feels like a beautiful dream. You've made my life complete in ways I never knew possible. I promise to love you, cherish you, and hold you close through all of life's adventures. Forever and always, my Player Two. 💕",
     },
   ],
 }

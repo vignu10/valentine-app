@@ -15,9 +15,10 @@ export interface Quest {
   character: 'cody' | 'both'
   riddle: string
   answers: string[]
+  choices?: string[]
   successMessage: string
   memory: string
-  hasCarSurprise?: boolean  // ADD THIS LINE
+  hasCarSurprise?: boolean
 }
 
 export interface QuestConfig {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "echo '' && echo '💕 Love Adventure Quest' && echo '⚠️  Local URL: http://localhost:3000/valentine-app' && echo '   (not http://localhost:3000)' && echo '' && next dev",
     "build": "next build",
     "start": "next start",
     "export": "next build"
